@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import IconCloudDemo from "@/components/globe";
 import { Code2, Paintbrush, Database, Layout, Cpu, Cloud } from "lucide-react";
+import { GradientCard } from "@/components/ui/GradientCard";
 import { FaReact, FaNodeJs, FaGitAlt, FaLinux, FaFigma } from "react-icons/fa";
 import {
   SiNextdotjs,
@@ -23,44 +24,52 @@ import { BsFileEarmarkCode, BsGrid1X2 } from "react-icons/bs";
 import { MdAnimation } from "react-icons/md";
 import { FcWorkflow } from "react-icons/fc";
 
-const SkillCard = ({ icon: Icon, title, skills, color }) => (
-  <Card className="group relative overflow-hidden bg-gray-900/80 border-gray-700 hover:scale-[1.02] transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/20">
-    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[rgba(100,100,255,0.1)] to-transparent group-hover:via-[rgba(100,100,255,0.2)] animate-shimmer"></div>
-    <CardContent className="p-6 relative z-10">
-      <div className="flex items-center gap-4 mb-6">
-        <div
-          className={`p-3 rounded-xl bg-gray-800/50 ${color} group-hover:scale-110 transition-transform duration-300`}
-        >
-          <Icon className="w-8 h-8" />
-        </div>
-        <h3 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">
-          {title}
-        </h3>
-      </div>
-      <div className="flex flex-wrap gap-2">
-        {skills.map((skill, index) => (
-          <Badge
-            key={index}
-            variant="outline"
-            className="group/badge relative bg-gray-800/50 hover:bg-gray-700/80 text-gray-100 border-gray-600 flex items-center gap-2 py-2 px-3 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-blue-500/20"
+const SkillCard = ({ icon: Icon, title, skills, color, featured }) => {
+  const card = (
+    <Card className="group relative overflow-hidden bg-dark-card border border-dark-border/80 hover:shadow-xl hover:shadow-primary-500/10">
+      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent group-hover:via-white/10 animate-shimmer" />
+      <CardContent className="p-6 relative z-10">
+        <div className="flex items-center gap-4 mb-6">
+          <div
+            className={`p-3 rounded-xl bg-dark-bg/40 ${color} group-hover:scale-110 transition-transform duration-300`}
           >
-            <span className="transform group-hover/badge:scale-110 transition-transform duration-300">
-              {skill.icon}
-            </span>
-            <span className="font-medium">{skill.name}</span>
-          </Badge>
-        ))}
-      </div>
-    </CardContent>
-  </Card>
-);
+            <Icon className="w-8 h-8" />
+          </div>
+          <h3 className="text-2xl font-bold text-white">{title}</h3>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {skills.map((skill, index) => (
+            <Badge
+              key={index}
+              variant="outline"
+              className="group/badge relative bg-dark-bg/30 hover:bg-dark-bg/50 text-gray-100 border-dark-border flex items-center gap-2 py-2 px-3 transition-all duration-300 hover:scale-105"
+            >
+              <span className="transform group-hover/badge:scale-110 transition-transform duration-300">
+                {skill.icon}
+              </span>
+              <span className="font-medium">{skill.name}</span>
+            </Badge>
+          ))}
+        </div>
+      </CardContent>
+    </Card>
+  );
+
+  if (!featured) return card;
+
+  return (
+    <GradientCard animated={false} className="rounded-xl">
+      {card}
+    </GradientCard>
+  );
+};
 
 const SkillsSection = () => {
   const skillCategories = [
     {
       icon: Code2,
       title: "Frontend Development",
-      color: "text-blue-400",
+      color: "text-primary-400",
       skills: [
         { name: "React", icon: <FaReact className="w-4 h-4 text-[#61DAFB]" /> },
         {
@@ -88,7 +97,7 @@ const SkillsSection = () => {
     {
       icon: Database,
       title: "Backend Development",
-      color: "text-green-400",
+      color: "text-accent-400",
       skills: [
         {
           name: "Node.js",
@@ -119,7 +128,7 @@ const SkillsSection = () => {
     {
       icon: Layout,
       title: "UI/UX Design",
-      color: "text-purple-400",
+      color: "text-primary-300",
       skills: [
         { name: "Figma", icon: <FaFigma className="w-4 h-4 text-[#F24E1E]" /> },
         {
@@ -139,7 +148,7 @@ const SkillsSection = () => {
     {
       icon: Cloud,
       title: "  DevOps",
-      color: "text-orange-400",
+      color: "text-accent-500",
       skills: [
         { name: "CI/CD", icon: <FcWorkflow className="w-4 h-4" /> },
 
@@ -150,7 +159,7 @@ const SkillsSection = () => {
     {
       icon: Cpu,
       title: "Tools & Technologies",
-      color: "text-pink-400",
+      color: "text-primary-400",
       skills: [
         {
           name: "VS Code",
@@ -173,7 +182,7 @@ const SkillsSection = () => {
     {
       icon: Paintbrush,
       title: "Creative Skills",
-      color: "text-yellow-400",
+      color: "text-accent-400",
       skills: [
         {
           name: "UI Animation",
@@ -188,11 +197,14 @@ const SkillsSection = () => {
   ];
 
   return (
-    <main className="pt-15 lg:pt-0 text-white min-h-screen bg-[#04081A] relative">
+    <main
+      id="main-content"
+      className="pt-24 text-white min-h-screen bg-dark-bg relative"
+    >
       {/* Grid Background */}
       <div className="absolute inset-0 bg-grid-pattern opacity-20 pointer-events-none"></div>
 
-      <section className="container mx-auto px-4 py-11 relative z-10">
+      <section className="container mx-auto px-4 py-section relative z-10">
         <div className="flex justify-center items-center ">
           <IconCloudDemo />
         </div>
@@ -204,36 +216,11 @@ const SkillsSection = () => {
               title={category.title}
               skills={category.skills}
               color={category.color}
+              featured={index < 2}
             />
           ))}
         </div>
       </section>
-      <style jsx>{`
-        @keyframes shimmer {
-          0% {
-            transform: translateX(-100%);
-          }
-          100% {
-            transform: translateX(100%);
-          }
-        }
-        .animate-shimmer {
-          animation: shimmer 2s infinite;
-        }
-        .bg-grid-pattern {
-          background-image: linear-gradient(
-              to right,
-              rgba(100, 100, 255, 0.1) 1px,
-              transparent 1px
-            ),
-            linear-gradient(
-              to bottom,
-              rgba(100, 100, 255, 0.1) 1px,
-              transparent 1px
-            );
-          background-size: 30px 30px;
-        }
-      `}</style>
     </main>
   );
 };

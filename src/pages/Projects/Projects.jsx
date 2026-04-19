@@ -1,6 +1,6 @@
 import { ReactLenis } from "lenis/react";
 import { useTransform, motion, useScroll } from "framer-motion";
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 import PropTypes from "prop-types";
 
 const projects = [
@@ -34,54 +34,10 @@ export default function Projects() {
     offset: ["start start", "end end"],
   });
 
-  useEffect(() => {
-    // Add specific styles for 1366x768 resolution
-    const style = document.createElement("style");
-    style.textContent = `
-      @media screen and (width: 1366px) and (height: 768px),
-             screen and (width: 1367px) and (height: 768px),
-             screen and (width: 1368px) and (height: 769px) {
-        .project-card {
-          scale: 0.85;
-          margin-top: -5vh;
-        }
-        .project-container {
-          height: 90vh;
-        }
-      }
-    `;
-    document.head.appendChild(style);
-
-    // Resolution check function
-    const checkResolution = () => {
-      const isTargetResolution =
-        window.innerWidth >= 1360 &&
-        window.innerWidth <= 1370 &&
-        window.innerHeight >= 760 &&
-        window.innerHeight <= 775;
-
-      if (isTargetResolution) {
-        document.documentElement.style.setProperty("--project-scale", "0.85");
-        document.documentElement.style.setProperty("--project-margin", "-5vh");
-      } else {
-        document.documentElement.style.setProperty("--project-scale", "1");
-        document.documentElement.style.setProperty("--project-margin", "0");
-      }
-    };
-
-    checkResolution();
-    window.addEventListener("resize", checkResolution);
-
-    return () => {
-      document.head.removeChild(style);
-      window.removeEventListener("resize", checkResolution);
-    };
-  }, []);
-
   return (
     <ReactLenis root>
-      <main className="bg-black" ref={container}>
-        <section className="text-white w-full bg-slate-950">
+      <main id="main-content" className="bg-dark-bg" ref={container}>
+        <section className="text-white w-full bg-dark-bg">
           {projects.map((project, i) => {
             const targetScale = 1 - (projects.length - i) * 0.05;
             return (
@@ -130,8 +86,6 @@ function Card({
         style={{
           scale,
           top: `calc(-5vh + ${i * 25}px)`,
-          transform: `scale(var(--project-scale, 1))`,
-          marginTop: "var(--project-margin, 0)",
         }}
         className="relative -top-[25%] h-auto w-[90%] md:w-[85%] lg:w-[75%] xl:w-[65%] origin-top project-card"
         whileHover={{
@@ -140,12 +94,13 @@ function Card({
         }}
       >
         {/* Modern split card design */}
-        <div className="w-full flex flex-col md:flex-row bg-zinc-900 rounded-2xl overflow-hidden shadow-xl">
+        <div className="w-full flex flex-col md:flex-row bg-dark-card rounded-2xl overflow-hidden shadow-xl border border-dark-border/60">
           {/* Image section - full width on mobile, 55% on desktop */}
           <div className="w-full md:w-[55%] h-[250px] md:h-[400px] lg:h-[450px] relative overflow-hidden">
             <motion.img
               src={url}
               alt={title}
+              loading="lazy"
               className="w-full h-full object-cover"
               initial={{ scale: 1 }}
               whileHover={{ scale: 1.05 }}
@@ -162,7 +117,7 @@ function Card({
             />
 
             {/* Project number */}
-            <div className="absolute top-4 left-4 md:top-6 md:left-6 bg-black/50 backdrop-blur-md text-white px-3 py-1 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-medium">
+            <div className="absolute top-4 left-4 md:top-6 md:left-6 bg-dark-bg/60 backdrop-blur-md text-white px-3 py-1 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-medium border border-dark-border/40">
               Project {i + 1}
             </div>
           </div>
@@ -175,7 +130,7 @@ function Card({
                   className="w-2 h-2 md:w-3 md:h-3 rounded-full"
                   style={{ backgroundColor: color }}
                 />
-                <div className="h-[1px] w-12 md:w-20 bg-gray-600" />
+                <div className="h-[1px] w-12 md:w-20 bg-dark-border" />
               </div>
 
               <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-2 md:mb-4">
@@ -187,7 +142,7 @@ function Card({
             </div>
 
             <div className="mt-4 md:mt-auto pt-4">
-              <div className="w-full h-[1px] bg-gray-800 mb-4 md:mb-6" />
+              <div className="w-full h-[1px] bg-dark-border mb-4 md:mb-6" />
 
               <div className="flex items-center gap-4">
                 {/* GitHub Link */}

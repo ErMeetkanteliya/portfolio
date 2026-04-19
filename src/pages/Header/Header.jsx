@@ -3,7 +3,6 @@ import {
   FaHome,
   FaLaptopCode,
   FaUser,
-  FaBriefcase,
   FaGraduationCap,
   FaCode,
   FaEnvelope,
@@ -18,23 +17,10 @@ export default function Header() {
     return path;
   });
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
-  useEffect(() => {
-    const handleResize = () => setWindowWidth(window.innerWidth);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
 
   const navLinks = [
     { id: "home", icon: FaHome, text: "Home", path: "/" },
     { id: "skills", icon: FaCode, text: "Skills", path: "/skills" },
-    {
-      id: "experience",
-      icon: FaBriefcase,
-      text: "Experience",
-      path: "/experience",
-    },
     {
       id: "education",
       icon: FaGraduationCap,
@@ -46,16 +32,18 @@ export default function Header() {
   ];
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50 bg-gray-900/95 backdrop-blur-md md:bg-transparent md:backdrop-blur-none">
+    <header className="fixed top-0 left-0 w-full z-50 bg-dark-card/95 backdrop-blur-md md:bg-transparent md:backdrop-blur-none">
       <div className="md:fixed md:top-4 md:left-1/2 md:transform md:-translate-x-1/2 w-full md:w-auto">
-        <div className="p-[2px] md:rounded-full bg-gradient-to-r from-emerald-400 via-cyan-500 to-indigo-500 animate-gradient-x">
-          <nav className="bg-gray-900/90 backdrop-blur-md md:rounded-full px-4 md:px-6 py-2.5">
+        <div className="p-[2px] md:rounded-full bg-[length:200%_200%] bg-gradient-to-r from-primary-500 to-accent-400 animate-gradient-x">
+          <nav className="bg-dark-card/90 backdrop-blur-md md:rounded-full px-4 md:px-6 py-2.5 border border-dark-border/60">
             {/* Mobile Menu Button */}
             <div className="flex justify-between items-center md:hidden px-2">
               <Link to="/" className="text-white font-bold">Portfolio</Link>
               <button 
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 className="text-white p-2"
+                aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+                aria-expanded={isMenuOpen}
               >
                 <FaBars />
               </button>
@@ -63,7 +51,7 @@ export default function Header() {
 
             {/* Navigation Links */}
             <div className={`${isMenuOpen ? 'block' : 'hidden'} md:block`}>
-              <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-1 lg:gap-2 py-4 md:py-0">
+              <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-1 lg:gap-2 py-4 md:py-0 max-h-[70vh] md:max-h-none overflow-y-auto md:overflow-visible">
                 {navLinks.map(({ id, icon: Icon, text, path }) => (
                   <Link
                     key={id}
@@ -72,6 +60,7 @@ export default function Header() {
                       setActiveLink(id);
                       setIsMenuOpen(false);
                     }}
+                    aria-current={activeLink === id ? "page" : undefined}
                     className={`px-3 py-2 md:py-1.5 rounded-lg md:rounded-full text-sm font-medium
                       transition-all duration-300 flex items-center gap-2
                       hover:bg-white/10 
@@ -95,21 +84,6 @@ export default function Header() {
           </nav>
         </div>
       </div>
-
-      <style>{`
-        @keyframes gradient-x {
-          0%, 100% {
-            background-position: 0% 50%;
-          }
-          50% {
-            background-position: 100% 50%;
-          }
-        }
-        .animate-gradient-x {
-          animation: gradient-x 3s linear infinite;
-          background-size: 200% 200%;
-        }
-      `}</style>
     </header>
   );
 }

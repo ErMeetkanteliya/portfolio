@@ -11,6 +11,7 @@ export default function Contact() {
 
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const validateForm = () => {
     let tempErrors = {};
@@ -51,9 +52,12 @@ export default function Contact() {
       return;
     }
 
+    setIsSubmitting(true);
+    setStatus(null);
+
     // Create a new FormData object to send to Web3Forms API
     const form = new FormData();
-    form.append("access_key", "c5bfc004-d68b-4672-b1af-afe8f1ad320b"); // Replace with your Web3Forms access key
+    form.append("access_key", import.meta.env.VITE_WEB3FORMS_KEY);
     form.append("name", formData.name);
     form.append("email", formData.email);
     form.append("subject", formData.subject || "New Contact Form Submission");
@@ -83,13 +87,15 @@ export default function Contact() {
     } catch (error) {
       setStatus("An error occurred. Please try again.");
       console.error("Error:", error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
     <main
-      className="pt-20 lg:pt-[0rem] bg-[#04081A]
- text-white min-h-screen"
+      id="main-content"
+      className="pt-24 bg-dark-bg text-white min-h-screen"
     >
       <section className="hero min-h-screen flex items-center relative px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto">
@@ -97,7 +103,7 @@ export default function Contact() {
             {/* Contact Info */}
             <div className="space-y-8">
               <div>
-                <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+                <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-primary-400 to-accent-400 bg-clip-text text-transparent">
                   Get in Touch
                 </h2>
                 <p className="text-gray-300 text-lg">
@@ -107,8 +113,8 @@ export default function Contact() {
 
               <div className="space-y-6">
                 <div className="flex items-center space-x-4">
-                  <div className="bg-purple-500/10 p-3 rounded-lg">
-                    <Mail className="w-6 h-6 text-purple-400" />
+                  <div className="bg-primary-500/10 p-3 rounded-lg">
+                    <Mail className="w-6 h-6 text-primary-400" />
                   </div>
                   <div>
                     <h3 className="font-semibold">Email</h3>
@@ -117,8 +123,8 @@ export default function Contact() {
                 </div>
 
                 <div className="flex items-center space-x-4">
-                  <div className="bg-pink-500/10 p-3 rounded-lg">
-                    <MapPin className="w-6 h-6 text-pink-400" />
+                  <div className="bg-accent-500/10 p-3 rounded-lg">
+                    <MapPin className="w-6 h-6 text-accent-400" />
                   </div>
                   <div>
                     <h3 className="font-semibold">Location</h3>
@@ -129,7 +135,7 @@ export default function Contact() {
             </div>
 
             {/* Contact Form */}
-            <div className="backdrop-blur-lg bg-white/5 p-8 rounded-2xl shadow-xl">
+            <div className="backdrop-blur-lg bg-white/5 p-8 rounded-2xl shadow-xl border border-dark-border/60">
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 gap-6">
                   <div>
@@ -137,8 +143,8 @@ export default function Contact() {
                       type="text"
                       placeholder="Your Name"
                       className={`w-full px-4 py-3 rounded-lg bg-white/5 border ${
-                        errors.name ? "border-red-500" : "border-gray-700"
-                      } focus:border-blue-500 focus:outline-none transition-colors`}
+                        errors.name ? "border-red-500" : "border-dark-border"
+                      } focus:border-primary-500 focus:outline-none transition-colors`}
                       value={formData.name}
                       onChange={(e) =>
                         setFormData({ ...formData, name: e.target.value })
@@ -154,8 +160,8 @@ export default function Contact() {
                       type="email"
                       placeholder="Your Email"
                       className={`w-full px-4 py-3 rounded-lg bg-white/5 border ${
-                        errors.email ? "border-red-500" : "border-gray-700"
-                      } focus:border-blue-500 focus:outline-none transition-colors`}
+                        errors.email ? "border-red-500" : "border-dark-border"
+                      } focus:border-primary-500 focus:outline-none transition-colors`}
                       value={formData.email}
                       onChange={(e) =>
                         setFormData({ ...formData, email: e.target.value })
@@ -173,8 +179,8 @@ export default function Contact() {
                       type="text"
                       placeholder="Subject"
                       className={`w-full px-4 py-3 rounded-lg bg-white/5 border ${
-                        errors.subject ? "border-red-500" : "border-gray-700"
-                      } focus:border-blue-500 focus:outline-none transition-colors`}
+                        errors.subject ? "border-red-500" : "border-dark-border"
+                      } focus:border-primary-500 focus:outline-none transition-colors`}
                       value={formData.subject}
                       onChange={(e) =>
                         setFormData({ ...formData, subject: e.target.value })
@@ -192,8 +198,8 @@ export default function Contact() {
                       placeholder="Your Message"
                       rows="4"
                       className={`w-full px-4 py-3 rounded-lg bg-white/5 border ${
-                        errors.message ? "border-red-500" : "border-gray-700"
-                      } focus:border-blue-500 focus:outline-none transition-colors resize-none`}
+                        errors.message ? "border-red-500" : "border-dark-border"
+                      } focus:border-primary-500 focus:outline-none transition-colors resize-none`}
                       value={formData.message}
                       onChange={(e) =>
                         setFormData({ ...formData, message: e.target.value })
@@ -209,10 +215,20 @@ export default function Contact() {
 
                 <button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white py-3 px-6 rounded-lg font-semibold flex items-center justify-center space-x-2 hover:opacity-90 transition-opacity"
+                  disabled={isSubmitting}
+                  className="w-full bg-gradient-to-r from-primary-500 to-accent-400 text-white py-3 px-6 rounded-lg font-semibold flex items-center justify-center space-x-2 hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <span>Send Message</span>
-                  <Send className="w-4 h-4" />
+                  {isSubmitting ? (
+                    <>
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      <span>Sending...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>Send Message</span>
+                      <Send className="w-4 h-4" />
+                    </>
+                  )}
                 </button>
               </form>
 

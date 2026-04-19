@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import Prism from "prismjs";
 import "prismjs/components/prism-javascript";
 import "@/assets/css/tomorrow.css";
@@ -6,6 +6,17 @@ import Meteors from "@/components/ui/meteors";
 import PortfolioPage from "@/pages/About/About";
 import SparklesText from "@/components/ui/sparkles-text";
 import { FlipWords } from "@/components/ui/flip-words";
+import resumePdf from "@/assets/Meet_Kanteliya_Resume_v6.pdf";
+import {
+  ArrowRight,
+  ChevronDown,
+  Code,
+  Lightbulb,
+  Mail,
+  Mouse,
+  Rocket,
+  Wand2,
+} from "lucide-react";
 
 // Grid Background - Replacing the HexagonBackground
 const GridBackground = () => {
@@ -74,71 +85,13 @@ const profile = {
 
   useEffect(() => {
     Prism.highlightAll();
-
-    // Add CSS animation for grid and dots
-    const style = document.createElement("style");
-    style.textContent = `
-      @keyframes gridPulse {
-        0%, 100% { opacity: 0.1; }
-        50% { opacity: 0.3; }
-      }
-      
-      @keyframes dotPulse {
-        0%, 100% { opacity: 0.2; transform: scale(0.8); }
-        50% { opacity: 0.5; transform: scale(1.2); }
-      }
-      
-      /* Media query for 1366x768 resolution */
-      @media screen and (width: 1366px) and (height: 768px), 
-             screen and (width: 1367px) and (height: 768px),
-             screen and (width: 1368px) and (height: 769px) {
-        .hero {
-          padding-top: 12rem !important;
-        }
-        .hero .container {
-          padding-top: 10rem !important;
-          margin-top: 5rem !important;
-        }
-        .hero-section-padding {
-          padding-top: 12rem !important;
-        }
-      }
-    `;
-    document.head.appendChild(style);
-
-    // Apply extra padding for 1366x768 resolution
-    const checkResolution = () => {
-      const isTargetResolution =
-        window.innerWidth >= 1360 &&
-        window.innerWidth <= 1370 &&
-        window.innerHeight >= 760 &&
-        window.innerHeight <= 775;
-
-      if (isTargetResolution) {
-        document.documentElement.style.setProperty(
-          "--hero-padding-top",
-          "12rem"
-        );
-      } else {
-        document.documentElement.style.setProperty("--hero-padding-top", "0");
-      }
-    };
-
-    checkResolution();
-    window.addEventListener("resize", checkResolution);
-
-    return () => {
-      document.head.removeChild(style);
-      window.removeEventListener("resize", checkResolution);
-    };
   }, [code]);
 
   return (
     <>
-      <main className="bg-[#020617] text-white min-h-screen">
+      <main id="main-content" className="bg-dark-bg text-white min-h-screen">
         <section
           className="hero min-h-screen flex items-center justify-center relative px-4 sm:px-6 lg:px-8 py-10 md:py-16 lg:py-0 hero-section-padding"
-          style={{ paddingTop: "var(--hero-padding-top, 0)" }}
         >
           <div className="absolute inset-0"></div>
 
@@ -158,27 +111,18 @@ const profile = {
           {/* Main content container */}
           <div
             className="container mx-auto flex flex-col lg:flex-row items-center justify-between relative z-10 py-8 md:py-10 lg:py-12 md:pt-28 xl:pt-28"
-            style={{
-              paddingTop:
-                window.innerWidth >= 1360 &&
-                window.innerWidth <= 1370 &&
-                window.innerHeight >= 760 &&
-                window.innerHeight <= 775
-                  ? "12rem"
-                  : "",
-            }}
           >
             {/* Left column - Text content */}
             <div className="w-full lg:w-1/2 mb-12 lg:mb-0 animate__animated animate__fadeInLeft relative">
               {/* Decorative blurs */}
-              <div className="absolute hidden lg:-top-20 lg:-left-20 lg:block w-48 h-48 lg:w-64 lg:h-64 bg-blue-500/10 rounded-full blur-3xl"></div>
-              <div className="absolute hidden lg:block lg:top-40 lg:-right-20 w-48 h-48 lg:w-64 lg:h-64 bg-teal-500/10 rounded-full blur-3xl"></div>
+              <div className="absolute hidden lg:-top-20 lg:-left-20 lg:block w-48 h-48 lg:w-64 lg:h-64 bg-primary-500/10 rounded-full blur-3xl"></div>
+              <div className="absolute hidden lg:block lg:top-40 lg:-right-20 w-48 h-48 lg:w-64 lg:h-64 bg-accent-500/10 rounded-full blur-3xl"></div>
 
               {/* Welcome badge */}
-              <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 mb-6 sm:mb-8 animate__animated animate__fadeInDown animate__delay-1s">
-                <div className="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></div>
+              <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full bg-dark-card/60 backdrop-blur-sm border border-dark-border/60 mb-6 sm:mb-8 animate__animated animate__fadeInDown animate__delay-1s">
+                <div className="w-2 h-2 rounded-full bg-primary-400 animate-pulse"></div>
                 <span className="text-gray-300 text-xs sm:text-sm font-medium">
-                  Welcome to my universe
+                  Available for opportunities
                 </span>
               </div>
 
@@ -194,15 +138,15 @@ const profile = {
                     </span>
                   </span>
                 </h1>
-                <div className="absolute -z-10 top-1/2 -translate-y-1/2 left-1/4 w-24 sm:w-32 h-24 sm:h-32 bg-blue-500/20 rounded-full blur-2xl animate-pulse"></div>
+                <div className="absolute -z-10 top-1/2 -translate-y-1/2 left-1/4 w-24 sm:w-32 h-24 sm:h-32 bg-primary-500/20 rounded-full blur-2xl animate-pulse"></div>
               </div>
 
               {/* Role badge */}
-              <div className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2 sm:py-3 rounded-xl sm:rounded-2xl bg-gradient-to-r from-blue-500/10 to-teal-500/10 border border-blue-500/20 mb-6 sm:mb-8 backdrop-blur-sm animate__animated animate__fadeInUp animate__delay-1s">
-                <i className="fas fa-rocket text-blue-400 animate-bounce text-sm sm:text-base"></i>
+              <div className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2 sm:py-3 rounded-xl sm:rounded-2xl bg-gradient-to-r from-primary-500/10 to-accent-500/10 border border-primary-500/20 mb-6 sm:mb-8 backdrop-blur-sm animate__animated animate__fadeInUp animate__delay-1s">
+                <Rocket className="w-4 h-4 text-primary-400 animate-bounce" />
                 <span>
                   <FlipWords
-                    className={"text-lg sm:text-xl text-blue-400 font-medium"}
+                    className={"text-lg sm:text-xl text-primary-400 font-medium"}
                     words={words}
                   />
                 </span>
@@ -211,7 +155,8 @@ const profile = {
               {/* Description */}
               <div className="relative mb-8 sm:mb-12 max-w-xl">
                 <p className="text-base sm:text-xl text-gray-300/90 leading-relaxed">
-                  JavaScript lover 🚀 | Web Developer and coding the future 💻✨
+                  Building scalable web applications with modern JavaScript technologies.
+                  Focused on creating efficient, user-centric solutions that solve real problems.
                 </p>
               </div>
 
@@ -220,25 +165,27 @@ const profile = {
                 {/* View Projects Button */}
                 <a
                   href="https://github.com/MeetHacker04"
-                  className="group relative inline-flex items-center justify-center gap-3 bg-gradient-to-r from-blue-500 to-teal-400 p-0.5 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-[0_0_2rem_-0.5rem_#60A5FA]"
+                  className="group relative inline-flex items-center justify-center gap-3 bg-gradient-to-r from-primary-500 to-accent-400 p-0.5 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-[0_0_2rem_-0.5rem_#60A5FA]"
                 >
-                  <span className="block w-full px-6 sm:px-8 py-3 sm:py-4 rounded-[11px] bg-gray-900 transition-all duration-300 group-hover:bg-gradient-to-r group-hover:from-blue-500 group-hover:to-teal-400">
+                  <span className="block w-full px-6 sm:px-8 py-3 sm:py-4 rounded-[11px] bg-dark-card transition-all duration-300 group-hover:bg-gradient-to-r group-hover:from-primary-500 group-hover:to-accent-400">
                     <span className="relative flex items-center justify-center gap-2 text-white font-medium">
                       <span>Learn More</span>
-                      <i className="fas fa-arrow-right transform transition-all duration-300 group-hover:translate-x-1"></i>
+                      <ArrowRight className="w-4 h-4 transform transition-all duration-300 group-hover:translate-x-1" />
                     </span>
                   </span>
                 </a>
 
                 {/* Contact Button */}
                 <a
-                  href="#"
+                  href={resumePdf}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="group relative inline-flex items-center justify-center gap-3 p-0.5 rounded-xl bg-gradient-to-r from-gray-800 to-gray-700 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_2rem_-0.5rem_#60A5FA]"
                 >
-                  <span className="block w-full px-6 sm:px-8 py-3 sm:py-4 rounded-[11px] bg-gray-900 border border-gray-700/50 transition-all duration-300 group-hover:bg-gradient-to-r group-hover:from-gray-800 group-hover:to-gray-700">
+                  <span className="block w-full px-6 sm:px-8 py-3 sm:py-4 rounded-[11px] bg-dark-card border border-dark-border/60 transition-all duration-300 group-hover:bg-gradient-to-r group-hover:from-dark-card group-hover:to-dark-card/60">
                     <span className="relative flex items-center justify-center gap-2 text-gray-300 font-medium group-hover:text-white">
                       <span>Get Resume</span>
-                      <i className="fas fa-envelope transform transition-all duration-300 group-hover:rotate-12"></i>
+                      <Mail className="w-4 h-4 transform transition-all duration-300 group-hover:rotate-12" />
                     </span>
                   </span>
                 </a>
@@ -247,18 +194,20 @@ const profile = {
               {/* Floating badges */}
               <div className="hidden lg:block absolute left-[5.5rem] top-[2.3rem] animate-float-slow">
                 <div className="px-4 py-2 rounded-lg bg-purple-500/10 backdrop-blur-sm border border-purple-500/20 text-purple-400">
-                  <i className="fas fa-wand-magic-sparkles"></i>&nbsp;&nbsp;UI
-                  Magic
+                  <Wand2 className="w-4 h-4 inline-block align-[-0.125em]" />
+                  <span className="ml-2">UI Magic</span>
                 </div>
               </div>
               <div className="hidden lg:block absolute right-10 top-20 animate-float">
-                <div className="px-4 py-2 rounded-lg bg-blue-500/10 backdrop-blur-sm border border-blue-500/20 text-blue-400">
-                  <i className="fas fa-code"></i>&nbsp;&nbsp;Clean Code
+                <div className="px-4 py-2 rounded-lg bg-primary-500/10 backdrop-blur-sm border border-primary-500/20 text-primary-400">
+                  <Code className="w-4 h-4 inline-block align-[-0.125em]" />
+                  <span className="ml-2">Clean Code</span>
                 </div>
               </div>
               <div className="hidden lg:block absolute top-[17rem] left-[70%] transform -translate-x-1/2 animate-float">
                 <div className="px-4 py-2 rounded-lg bg-amber-500/10 backdrop-blur-sm border border-amber-500/20 text-amber-400">
-                  <i className="fas fa-lightbulb"></i>&nbsp;&nbsp;Innovation
+                  <Lightbulb className="w-4 h-4 inline-block align-[-0.125em]" />
+                  <span className="ml-2">Innovation</span>
                 </div>
               </div>
             </div>
@@ -266,13 +215,13 @@ const profile = {
             {/* Right column - Code window */}
             <div className="w-full lg:w-1/2 animate__animated animate__fadeInDown animate__delay-0.1s">
               <div className="gradient-border">
-                <div className="code-window bg-[#091121]">
+                <div className="code-window bg-dark-card">
                   <div className="window-header">
                     <div className="window-dot bg-red-500"></div>
                     <div className="window-dot bg-yellow-500"></div>
                     <div className="window-dot bg-green-500"></div>
                     <span className="ml-2 text-sm text-gray-400 flex items-center gap-2">
-                      <i className="fas fa-code"></i>
+                      <Code className="w-4 h-4" />
                       developer.js
                     </span>
                   </div>
@@ -288,10 +237,10 @@ const profile = {
         {/* Scroll indicator */}
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce flex flex-col items-center gap-2">
           <span className="text-gray-400 text-sm flex items-center gap-2">
-            <i className="fas fa-mouse text-blue-400"></i>
+            <Mouse className="w-4 h-4 text-primary-400" />
             About me
           </span>
-          <i className="fas fa-chevron-down text-blue-400 text-xl"></i>
+          <ChevronDown className="w-5 h-5 text-primary-400" />
         </div>
         <PortfolioPage />
       </main>

@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
-import { useTheme } from "next-themes";
 import { Cloud, fetchSimpleIcons, renderSimpleIcon } from "react-icon-cloud";
 
 export const cloudProps = {
@@ -57,7 +56,7 @@ export default function IconCloud({
   imageArray,
 }) {
   const [data, setData] = useState(null);
-  const { theme } = useTheme();
+  const theme = "dark";
 
   useEffect(() => {
     if (iconSlugs.length > 0) {
@@ -70,9 +69,9 @@ export default function IconCloud({
     if (!data) return null;
 
     return Object.values(data.simpleIcons).map((icon) =>
-      renderCustomIcon(icon, theme || "dark")
+      renderCustomIcon(icon, theme)
     );
-  }, [data, theme]);
+  }, [data]);
 
   return (
     // @ts-ignore
@@ -83,8 +82,19 @@ export default function IconCloud({
           imageArray.length > 0 &&
           imageArray.map((image, index) => {
             return (
-              <a key={index} href="#" onClick={(e) => e.preventDefault()}>
-                <img height="42" width="42" alt="A globe" src={image} />
+              <a
+                key={index}
+                href="/"
+                onClick={(e) => e.preventDefault()}
+                aria-label="Technology icon"
+              >
+                <img
+                  height="42"
+                  width="42"
+                  alt="Technology icon"
+                  src={image}
+                  loading="lazy"
+                />
               </a>
             );
           })}
