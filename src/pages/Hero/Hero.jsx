@@ -6,7 +6,7 @@ import Meteors from "@/components/ui/meteors";
 import PortfolioPage from "@/pages/About/About";
 import SparklesText from "@/components/ui/sparkles-text";
 import { FlipWords } from "@/components/ui/flip-words";
-import resumePdf from "@/assets/MB_Resume_07.pdf";
+import resumePdf from "@/assets/MB_Resume_07-Copy.pdf";
 import {
   ArrowRight,
   ChevronDown,
