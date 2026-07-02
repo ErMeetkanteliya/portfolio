@@ -9,6 +9,7 @@ const Skills = lazy(() => import("./pages/Skills/Skills"));
 const Education = lazy(() => import("./pages/Education/Education"));
 const Contact = lazy(() => import("./pages/Contact/Contact"));
 const Projects = lazy(() => import("./pages/Projects/Projects"));
+const Experience = lazy(() => import("./pages/Experience/Experience"));
 
 // Loading component
 const PageLoader = () => (
@@ -35,6 +36,7 @@ export default function App() {
           <Route path="/education" element={<Education />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/projects" element={<Projects />} />
+          <Route path="/Experience" element={<Experience />} />
         </Routes>
       </Suspense>
     </>
