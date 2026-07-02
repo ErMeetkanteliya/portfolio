@@ -98,15 +98,15 @@ export default function EnhancedPortfolioCard() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.5 }}>
-            Elena Baharet Frank
+            Meet Kanteliya
           </motion.h1>
           <motion.a
-            href="mailto:elebaharet@gmail.com"
+            href="mailto:meetbhai520@gmail.com"
             className="text-lg text-blue-400 hover:text-blue-300 transition-colors"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.5 }}>
-            elebaharet@gmail.com
+            meetbhai520@gmail.com
           </motion.a>
           <motion.div
             initial={{ opacity: 0, y: 20 }}

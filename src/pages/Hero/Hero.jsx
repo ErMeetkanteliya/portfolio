@@ -53,10 +53,11 @@ const GridBackground = () => {
 
 export default function Hero() {
   const words = [
-    "Full-Stack Developer & UI/UX Enthusiast",
-    "JavaScript Developer & MERN Stack Developer",
-    "Learning MEAN Stack",
-    "Linux & GitHub for DevOps Enthusiast",
+    "Full-Stack Developer ",
+    "Python Developer",
+    "MERN Stack Developer",
+    "Learning Cloud Computing ",
+    "Docker & GitHub for DevOps Enthusiast",
   ];
 
   const [code] = useState(`
@@ -65,8 +66,8 @@ const profile = {
     title: 'Full-Stack Developer | MERN stack | Problem Solver',
     skills: [
         'React', 'NextJS' , 'Express',
-        'MySQL', 'MongoDB','TypeScript',
-          'Git', 'Linux', 'Web Development'
+        'SQL', 'Docker','TypeScript',
+          'Git', 'AWS', ' Redux'
     ],
     hardWorker: true,
     quickLearner: true,
